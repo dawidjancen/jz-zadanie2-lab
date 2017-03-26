@@ -22,18 +22,12 @@ public class AddApplicantServer extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		if (session.getAttribute("conf") != null) {
-			response.getWriter().println("Formularz został już wypełniony!");
-
-			return;
-		}
-		
 		ConferenceApplication application = retrieveApplicationFromRequest(request);
 		
 		ConferenceApplicationRepository repository = new DummyConferenceApplicationRepository();
 		repository.add(application);
+		
+		HttpSession session = request.getSession();
 		
 		session.setAttribute("conf", application);
 		
